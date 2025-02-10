@@ -14,6 +14,12 @@ func (cfg *apiConfig) handlerThumbnailGet(w http.ResponseWriter, r *http.Request
 		respondWithError(w, http.StatusBadRequest, "Invalid video ID", err)
 		return
 	}
+	type thumbnail struct {
+		data      []byte
+		mediaType string
+	}
+
+	var videoThumbnails = map[uuid.UUID]thumbnail{}
 
 	tn, ok := videoThumbnails[videoID]
 	if !ok {
